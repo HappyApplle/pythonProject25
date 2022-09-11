@@ -33,9 +33,14 @@ class Player(GameSprite):
         if keys[K_s] and self.rect.y < 395:
             self.rect.y += self.speed
 
-ball = GameSprite('ball_1615463127.png', 200, 300, 100, 100, 10)
+ball = GameSprite('ball.png', 200, 300, 100, 100, 10)
 platform_1 = Player('platform.png', 100, 300, 30, 100, 10)
 platform_2 = Player('platform.png', 400, 300, 30, 100, 10)
+
+speed_x = 3
+speed_y = 3
+
+
 
 clock = time.Clock()
 FPS = 60
@@ -48,6 +53,14 @@ while game:
     platform_1.update_r()
     platform_2.reset()
     platform_2.update_l()
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+    if ball.rect.y < 0 or ball.rect.y > 400:
+        speed_y *= -1
+    if sprite.collide_rect(ball, platform_1):
+        speed_x *= -1
+    if sprite.collide_rect(ball, platform_2):
+        speed_x *= -1
     for e in event.get():
         if e.type == QUIT:
             exit()
